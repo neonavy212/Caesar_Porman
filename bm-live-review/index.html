@@ -43,7 +43,7 @@
       <div class="panel">
         <div class="two-col"><div><div class="field"><label>Teacher / class label</label><input id="hostName" value="BM Class" maxlength="30"></div><div class="field"><label>Questions</label><select id="questionCount"><option>10</option><option selected>15</option><option>20</option><option>25</option><option>30</option></select></div></div><div><div class="field"><label>Time per question</label><select id="questionTime"><option value="10">10 seconds</option><option value="15" selected>15 seconds</option><option value="20">20 seconds</option><option value="30">30 seconds</option></select></div><div class="field"><label>Scoring</label><select id="scoringMode"><option value="speed" selected>Correct + speed bonus</option><option value="accuracy">Accuracy only (1000 per correct)</option></select></div></div></div>
         <div class="field"><label>Units included</label><div class="unit-pills" id="hostUnits"></div></div>
-        <div class="host-note">Live rooms use MQTT discovery with WebRTC and a TURN fallback for restrictive school networks. Keep the teacher tab open during the game; the final report is stored locally on the teacher device and can be exported as CSV.</div>
+        <div class="host-note">Live rooms now use a central secure WebSocket message broker on standard HTTPS port 443. There is no peer-to-peer connection between student devices and the teacher laptop. Keep the teacher tab open during the game; the final report is stored locally on the teacher device and can be exported as CSV.</div>
         <div class="actions"><button class="btn primary" id="createRoom">Create room</button></div>
       </div>
       <div id="recentReports" style="margin-top:18px"></div>
@@ -56,8 +56,10 @@
     <section id="studentFinish" class="screen"><div class="panel big-status"><div class="emoji">🏁</div><h2>Game complete!</h2><p id="studentFinishText"></p><div id="studentFinalRank" class="room-code" style="font-size:52px"></div><button class="btn secondary" data-go="home">Back home</button></div></section>
     <section id="report" class="screen"><div class="section-title"><div><div class="eyebrow">Teacher report</div><h2>Session results</h2></div><div class="actions"><button class="btn green" id="downloadCsv">Download CSV</button><button class="btn secondary" id="newGame">New game</button></div></div><div id="reportContent"></div></section>
   </main>
-  <div class="footer">Definitions are original classroom wording aligned to the five Unit 1–5 review pages supplied by the teacher. Live rooms are temporary and use relay-assisted WebRTC when needed.</div>
+  <div class="footer">Definitions are original classroom wording aligned to the five Unit 1–5 review pages supplied by the teacher. Live room messages use a temporary shared broker; use student first names or nicknames rather than sensitive information.</div>
 </div>
 <div class="toast" id="toast"></div>
-<script type="module" src="app.js?v=3"></script>
+<script src="https://cdn.jsdelivr.net/npm/mqtt@5.14.1/dist/mqtt.min.js"></script>
+<script type="importmap">{"imports":{"https://esm.run/@trystero-p2p/mqtt@0.24.0":"./mqtt-bridge.js?v=4"}}</script>
+<script type="module" src="app.js?v=4"></script>
 </body></html>
