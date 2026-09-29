@@ -31,87 +31,33 @@
         <div class="mode-card"><div class="icon">🧠</div><h3>Flashcards</h3><p>Review the same Unit 1–5 vocabulary bank independently before or after the live game.</p><button class="btn secondary" data-go="flash">Open deck</button></div>
       </div>
     </section>
-
     <section id="flash" class="screen">
       <div class="section-title"><div><div class="eyebrow">Self-study</div><h2>Flashcard deck</h2></div><span id="flashCount" class="badge"></span></div>
       <div class="flash-layout">
-        <aside class="panel">
-          <h3>Choose unit</h3>
-          <div class="side-list" id="flashUnits"></div>
-          <div class="host-note tiny">Tip: click the card to flip. Use shuffle when students begin memorizing the order.</div>
-        </aside>
-        <div>
-          <div class="flash-card-wrap"><div class="flash-card" id="flashCard"><div class="face front"><div class="label" id="flashUnitLabel"></div><div class="big" id="flashTerm"></div><div class="muted">Tap to reveal</div></div><div class="face back"><div class="label">Definition</div><div class="big" id="flashDefinition"></div><div class="muted">Tap to return</div></div></div></div>
-          <div class="flash-controls"><button class="btn secondary" id="prevCard">← Previous</button><span id="flashPos" class="badge"></span><button class="btn secondary" id="nextCard">Next →</button><button class="btn ghost" id="shuffleCards">Shuffle</button></div>
-        </div>
+        <aside class="panel"><h3>Choose unit</h3><div class="side-list" id="flashUnits"></div><div class="host-note tiny">Tip: click the card to flip. Use shuffle when students begin memorizing the order.</div></aside>
+        <div><div class="flash-card-wrap"><div class="flash-card" id="flashCard"><div class="face front"><div class="label" id="flashUnitLabel"></div><div class="big" id="flashTerm"></div><div class="muted">Tap to reveal</div></div><div class="face back"><div class="label">Definition</div><div class="big" id="flashDefinition"></div><div class="muted">Tap to return</div></div></div></div><div class="flash-controls"><button class="btn secondary" id="prevCard">← Previous</button><span id="flashPos" class="badge"></span><button class="btn secondary" id="nextCard">Next →</button><button class="btn ghost" id="shuffleCards">Shuffle</button></div></div>
       </div>
     </section>
-
     <section id="host" class="screen">
       <div class="section-title"><div><div class="eyebrow">Teacher controls</div><h2>Create a live room</h2></div><span class="badge">Host browser stays open</span></div>
       <div class="panel">
-        <div class="two-col">
-          <div><div class="field"><label>Teacher / class label</label><input id="hostName" value="BM Class" maxlength="30"></div><div class="field"><label>Questions</label><select id="questionCount"><option>10</option><option selected>15</option><option>20</option><option>25</option><option>30</option></select></div></div>
-          <div><div class="field"><label>Time per question</label><select id="questionTime"><option value="10">10 seconds</option><option value="15" selected>15 seconds</option><option value="20">20 seconds</option><option value="30">30 seconds</option></select></div><div class="field"><label>Scoring</label><select id="scoringMode"><option value="speed" selected>Correct + speed bonus</option><option value="accuracy">Accuracy only (1000 per correct)</option></select></div></div>
-        </div>
+        <div class="two-col"><div><div class="field"><label>Teacher / class label</label><input id="hostName" value="BM Class" maxlength="30"></div><div class="field"><label>Questions</label><select id="questionCount"><option>10</option><option selected>15</option><option>20</option><option>25</option><option>30</option></select></div></div><div><div class="field"><label>Time per question</label><select id="questionTime"><option value="10">10 seconds</option><option value="15" selected>15 seconds</option><option value="20">20 seconds</option><option value="30">30 seconds</option></select></div><div class="field"><label>Scoring</label><select id="scoringMode"><option value="speed" selected>Correct + speed bonus</option><option value="accuracy">Accuracy only (1000 per correct)</option></select></div></div></div>
         <div class="field"><label>Units included</label><div class="unit-pills" id="hostUnits"></div></div>
-        <div class="host-note">This version uses browser-to-browser WebRTC. There is no student login or central database. Keep the teacher tab open during the game; the final report is stored locally on the teacher device and can be exported as CSV.</div>
+        <div class="host-note">Live rooms use MQTT discovery with WebRTC and a TURN fallback for restrictive school networks. Keep the teacher tab open during the game; the final report is stored locally on the teacher device and can be exported as CSV.</div>
         <div class="actions"><button class="btn primary" id="createRoom">Create room</button></div>
       </div>
       <div id="recentReports" style="margin-top:18px"></div>
     </section>
-
-    <section id="lobby" class="screen">
-      <div class="panel center">
-        <div class="eyebrow">Room ready</div><h2>Students join this room</h2><div class="room-code" id="roomCodeText"></div><div class="join-url" id="roomJoinUrl"></div>
-        <div class="actions" style="justify-content:center"><button class="btn secondary" id="copyJoinLink">Copy student link</button><button class="btn primary" id="startGame" disabled>Start game</button><button class="btn ghost" id="closeRoom">Close room</button></div>
-        <p class="muted"><span id="playerCount">0</span> student(s) connected</p><div class="player-grid" id="playerGrid"></div>
-      </div>
-    </section>
-
-    <section id="join" class="screen">
-      <div class="panel" style="max-width:560px;margin:40px auto">
-        <div class="eyebrow">Student</div><h2>Join live review</h2>
-        <div class="field"><label>Your display name</label><input id="studentName" maxlength="24" placeholder="e.g. Anna"></div>
-        <div class="field"><label>Room code</label><input id="studentRoom" maxlength="6" placeholder="ABC123" style="text-transform:uppercase;letter-spacing:.18em;font-weight:900"></div>
-        <button class="btn green" id="joinRoom" style="width:100%;margin-top:8px">Join room</button>
-        <p class="muted tiny center" id="joinStatus">No account is required.</p>
-      </div>
-    </section>
-
-    <section id="waiting" class="screen"><div class="panel big-status"><div class="emoji">🙌</div><h2>You're in!</h2><p>Waiting for the teacher to start.</p><div class="badge" id="waitingRoom"></div></div></section>
-
-    <section id="hostGame" class="screen">
-      <div class="game-layout">
-        <div class="question-card">
-          <div class="q-meta"><span id="hostQNum"></span><span id="answerProgress"></span></div>
-          <div style="display:flex;justify-content:space-between;gap:18px;align-items:flex-start"><div class="question" id="hostQuestion"></div><div class="timer-ring" id="hostTimer"><span>15</span></div></div>
-          <div class="answers" id="hostAnswers"></div>
-          <div class="progress" style="margin-top:18px"><div id="hostProgressBar"></div></div>
-          <div class="actions" id="hostGameActions"></div>
-        </div>
-        <aside class="leaderboard"><h3>Leaderboard</h3><div id="hostLeaderboard"></div></aside>
-      </div>
-    </section>
-
-    <section id="studentGame" class="screen">
-      <div class="question-card" style="max-width:880px;margin:auto">
-        <div class="q-meta"><span id="studentQNum"></span><span id="studentScore"></span></div>
-        <div style="display:flex;justify-content:space-between;gap:18px;align-items:flex-start"><div class="question" id="studentQuestion"></div><div class="timer-ring" id="studentTimer"><span>15</span></div></div>
-        <div class="answers" id="studentAnswers"></div>
-        <div id="studentResult"></div>
-      </div>
-    </section>
-
+    <section id="lobby" class="screen"><div class="panel center"><div class="eyebrow">Room ready</div><h2>Students join this room</h2><div class="room-code" id="roomCodeText"></div><div class="join-url" id="roomJoinUrl"></div><div class="actions" style="justify-content:center"><button class="btn secondary" id="copyJoinLink">Copy student link</button><button class="btn primary" id="startGame" disabled>Start game</button><button class="btn ghost" id="closeRoom">Close room</button></div><p class="muted"><span id="playerCount">0</span> student(s) connected</p><div class="player-grid" id="playerGrid"></div></div></section>
+    <section id="join" class="screen"><div class="panel" style="max-width:560px;margin:40px auto"><div class="eyebrow">Student</div><h2>Join live review</h2><div class="field"><label>Your display name</label><input id="studentName" maxlength="24" placeholder="e.g. Anna"></div><div class="field"><label>Room code</label><input id="studentRoom" maxlength="6" placeholder="ABC123" style="text-transform:uppercase;letter-spacing:.18em;font-weight:900"></div><button class="btn green" id="joinRoom" style="width:100%;margin-top:8px">Join room</button><p class="muted tiny center" id="joinStatus">No account is required.</p></div></section>
+    <section id="waiting" class="screen"><div class="panel big-status"><div class="emoji">🙌</div><h2>You're in!</h2><p>The teacher has received your connection. Waiting for the game to start.</p><div class="badge" id="waitingRoom"></div></div></section>
+    <section id="hostGame" class="screen"><div class="game-layout"><div class="question-card"><div class="q-meta"><span id="hostQNum"></span><span id="answerProgress"></span></div><div style="display:flex;justify-content:space-between;gap:18px;align-items:flex-start"><div class="question" id="hostQuestion"></div><div class="timer-ring" id="hostTimer"><span>15</span></div></div><div class="answers" id="hostAnswers"></div><div class="progress" style="margin-top:18px"><div id="hostProgressBar"></div></div><div class="actions" id="hostGameActions"></div></div><aside class="leaderboard"><h3>Leaderboard</h3><div id="hostLeaderboard"></div></aside></div></section>
+    <section id="studentGame" class="screen"><div class="question-card" style="max-width:880px;margin:auto"><div class="q-meta"><span id="studentQNum"></span><span id="studentScore"></span></div><div style="display:flex;justify-content:space-between;gap:18px;align-items:flex-start"><div class="question" id="studentQuestion"></div><div class="timer-ring" id="studentTimer"><span>15</span></div></div><div class="answers" id="studentAnswers"></div><div id="studentResult"></div></div></section>
     <section id="studentFinish" class="screen"><div class="panel big-status"><div class="emoji">🏁</div><h2>Game complete!</h2><p id="studentFinishText"></p><div id="studentFinalRank" class="room-code" style="font-size:52px"></div><button class="btn secondary" data-go="home">Back home</button></div></section>
-
-    <section id="report" class="screen">
-      <div class="section-title"><div><div class="eyebrow">Teacher report</div><h2>Session results</h2></div><div class="actions"><button class="btn green" id="downloadCsv">Download CSV</button><button class="btn secondary" id="newGame">New game</button></div></div>
-      <div id="reportContent"></div>
-    </section>
+    <section id="report" class="screen"><div class="section-title"><div><div class="eyebrow">Teacher report</div><h2>Session results</h2></div><div class="actions"><button class="btn green" id="downloadCsv">Download CSV</button><button class="btn secondary" id="newGame">New game</button></div></div><div id="reportContent"></div></section>
   </main>
-  <div class="footer">Definitions are original classroom wording aligned to the five Unit 1–5 review pages supplied by the teacher. Live rooms are temporary and peer-to-peer.</div>
+  <div class="footer">Definitions are original classroom wording aligned to the five Unit 1–5 review pages supplied by the teacher. Live rooms are temporary and use relay-assisted WebRTC when needed.</div>
 </div>
 <div class="toast" id="toast"></div>
-<script type="module" src="app.js?v=2"></script>
+<script type="module" src="app.js?v=3"></script>
 </body></html>
