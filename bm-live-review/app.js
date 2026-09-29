@@ -44,7 +44,7 @@ let liveRoom=null, actions={}, role=null, code=null, hostState=null, playerKey=n
 function leaveLive(){if(liveRoom){try{liveRoom.leave()}catch(e){}}liveRoom=null;actions={};role=null;code=null;hostState=null;clearInterval(localTimer)}
 function setupActions(){
  const names=['hello','state','answer','reveal','finish','kick'];
- for(const n of names){const [send,onMessage]=liveRoom.makeAction(n);actions[n]={send,onMessage}}
+ for(const n of names){actions[n]=liveRoom.makeAction(n)}
 }
 function unitPool(units){return BANK.filter(x=>units.includes(x.unit))}
 function makeQuestion(card,pool){
